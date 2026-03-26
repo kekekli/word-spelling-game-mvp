@@ -83,10 +83,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // --- 音效框架 ---
     const sounds = {
-        click: new Audio('assets/click.mp3'),
-        success: new Audio('assets/success.mp3'),
-        error: new Audio('assets/error.mp3'),
-        star: new Audio('assets/star.mp3')
+        click: new Audio('assets/click.MP3'),
+        success: new Audio('assets/success.MP3'),
+        error: new Audio('assets/error.MP3'),
+        star: new Audio('assets/star.MP3')
     };
 
     function playSound(soundName) {
