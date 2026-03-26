@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>单词拼写小游戏 (MVP)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 1. 顶部状态栏 -->
+        <header class="header">
+            <div class="progress-bar">
+                <div class="progress-bar-fill"></div>
+            </div>
+            <div class="star-counter">
+                <img src="https://img.icons8.com/color/48/star--v1.png" alt="Star Icon">
+                <span id="star-count">0</span>
+            </div>
+        </header>
+
+        <!-- 2. 游戏主面板 -->
+        <main class="game-board">
+            <!-- 新增图片容器 -->
+            <div class="image-container">
+                <img id="hint-image" src="" alt="单词提示">
+            </div>
+
+            <!-- 默认隐藏，拼写正确后显示 -->
+            <p class="sentence" id="sentence-display"></p>
+
+            <!-- 单词槽位区 -->
+            <div class="slots" id="slots-container">
+                <!-- JS 会在此处动态生成槽位 -->
+            </div>
+
+            <!-- 待选字母区 -->
+            <div class="letters" id="letters-container">
+                <!-- JS 会在此处动态生成待选字母 -->
+            </div>
+        </main>
+    </div>
+
+    <!-- 3. 底部反馈栏 (默认隐藏) -->
+
+    <!-- 正确时的反馈栏 -->
+    <footer class="feedback-bar success" id="success-feedback">
+        <button class="continue-button" id="continue-btn">继续</button>
+    </footer>
+
+    <!-- 错误时的反馈栏 -->
+    <footer class="feedback-bar error" id="error-feedback">
+        <button class="retry-button" id="retry-btn">我知道了</button>
+    </footer>
+
+    <!-- 4. 结算模块 (默认隐藏) -->
+    <div class="end-screen" id="end-screen">
+        <div class="end-screen-content">
+            <h2>太棒了!</h2>
+            <p>你完成了所有单词，收集了 <span id="final-star-count">0</span> 颗星星！</p>
+            <button class="restart-button" id="restart-btn">再玩一次</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
