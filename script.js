@@ -88,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         click: new Audio('assets/click.MP3'),
         success: new Audio('assets/success.MP3'),
         error: new Audio('assets/error.MP3'),
-        gold: new Audio('assets/gold.mp3') // 接入本地收集音效
+        gold: new Audio('assets/gold.MP3') // 接入本地收集音效
     };
 
     function playSound(soundName) {
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         for (let i = 0; i < 3; i++) {
             const star = document.createElement('img');
-            star.src = 'https://img.icons8.com/color/48/star--v1.png';
+            star.src = 'https://img.icons8.com/ios-filled/48/FFC107/star--v1.png';
             star.className = 'star-particle';
             star.style.left = `${starOrigin.left + starOrigin.width / 2 - 12}px`;
             star.style.top = `${starOrigin.top + starOrigin.height / 2 - 12}px`;
