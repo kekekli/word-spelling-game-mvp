@@ -58,9 +58,9 @@ const wordDatabaseRaw = [
     { "word": "IN", "sentence": "The pen is in the bag." }
 ];
 
-// 动态生成包含图片路径的最终数据库
 const wordDatabase = wordDatabaseRaw.map(item => ({
     ...item,
+    word: item.word.toLowerCase(),
     image: `assets/images/${item.word.toLowerCase()}.jpg`
 }));
 
@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const slotsContainer = document.getElementById('slots-container');
     const lettersContainer = document.getElementById('letters-container');
     const sentenceDisplay = document.getElementById('sentence-display');
+    const starCounter = document.querySelector('.star-counter');
     const starCountDisplay = document.getElementById('star-count');
     const progressBarFill = document.querySelector('.progress-bar-fill');
     const successFeedback = document.getElementById('success-feedback');
@@ -80,13 +81,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const endScreen = document.getElementById('end-screen');
     const finalStarCount = document.getElementById('final-star-count');
     const restartBtn = document.getElementById('restart-btn');
+    const resetBtn = document.getElementById('reset-btn');
 
-    // --- 音效框架 ---
+    // --- 音效框架 (已更新) ---
     const sounds = {
         click: new Audio('assets/click.MP3'),
         success: new Audio('assets/success.MP3'),
         error: new Audio('assets/error.MP3'),
-        star: new Audio('assets/star.MP3')
+        gold: new Audio('assets/gold.mp3') // 接入本地收集音效
     };
 
     function playSound(soundName) {
@@ -119,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
         slotsContainer.innerHTML = '';
         lettersContainer.innerHTML = '';
         sentenceDisplay.classList.remove('visible');
-        hintImage.src = ''; // 先清空图片
+        hintImage.src = '';
 
         if (currentWordIndex >= wordDatabase.length) {
             showEndScreen();
@@ -130,9 +132,8 @@ document.addEventListener('DOMContentLoaded', () => {
         const word = currentWordData.word;
         const letters = word.split('');
         
-        // 更新提示图片
         hintImage.src = currentWordData.image;
-        hintImage.onerror = () => { hintImage.style.visibility = 'hidden'; }; // 如果图片加载失败则隐藏
+        hintImage.onerror = () => { hintImage.style.visibility = 'hidden'; };
         hintImage.onload = () => { hintImage.style.visibility = 'visible'; };
 
         letters.forEach(() => {
@@ -154,56 +155,54 @@ document.addEventListener('DOMContentLoaded', () => {
         progressBarFill.style.width = `${progress}%`;
     }
 
-    // --- 交互：点击待选字母 ---
+    // --- 交互逻辑 ---
     lettersContainer.addEventListener('click', (e) => {
         if (isChecking || !e.target.classList.contains('letter-btn') || e.target.classList.contains('hidden')) return;
-        
         playSound('click');
         const letter = e.target.textContent;
         const firstEmptySlot = document.querySelector('.slot:not([data-letter])');
-        
         if (firstEmptySlot) {
             firstEmptySlot.textContent = letter;
             firstEmptySlot.dataset.letter = letter;
             firstEmptySlot.dataset.sourceId = e.target.dataset.id;
             e.target.classList.add('hidden');
         }
-
         const allSlotsFilled = ![...document.querySelectorAll('.slot')].some(s => !s.dataset.letter);
-        if (allSlotsFilled) {
-            checkWord();
-        }
+        if (allSlotsFilled) checkWord();
     });
 
-    // --- 交互：点击槽位撤回字母 ---
     slotsContainer.addEventListener('click', (e) => {
         if (isChecking || !e.target.classList.contains('slot') || !e.target.dataset.letter) return;
-        
         playSound('click');
         const sourceId = e.target.dataset.sourceId;
         const letterButtonToShow = document.querySelector(`.letter-btn[data-id='${sourceId}']`);
-        
-        if (letterButtonToShow) {
-            letterButtonToShow.classList.remove('hidden');
-        }
-
+        if (letterButtonToShow) letterButtonToShow.classList.remove('hidden');
         e.target.textContent = '';
         delete e.target.dataset.letter;
         delete e.target.dataset.sourceId;
     });
+
+    function resetCurrentWord() {
+        if (isChecking) return;
+        playSound('click');
+        const filledSlots = document.querySelectorAll('.slot[data-letter]');
+        filledSlots.forEach(slot => {
+            const sourceId = slot.dataset.sourceId;
+            const letterButtonToShow = document.querySelector(`.letter-btn[data-id='${sourceId}']`);
+            if (letterButtonToShow) letterButtonToShow.classList.remove('hidden');
+            slot.textContent = '';
+            delete slot.dataset.letter;
+            delete slot.dataset.sourceId;
+        });
+    }
 
     // --- 核心：校验单词 ---
     function checkWord() {
         isChecking = true;
         const slots = document.querySelectorAll('.slot');
         let filledWord = '';
-        slots.forEach(slot => {
-            filledWord += slot.textContent;
-        });
-        
-        const correctWord = wordDatabase[currentWordIndex].word;
-        
-        if (filledWord === correctWord) {
+        slots.forEach(slot => { filledWord += slot.textContent; });
+        if (filledWord === wordDatabase[currentWordIndex].word) {
             handleSuccess(slots);
         } else {
             handleError(slots);
@@ -225,13 +224,51 @@ document.addEventListener('DOMContentLoaded', () => {
         errorFeedback.classList.add('show');
     }
 
-    // --- 按钮事件绑定 ---
+    // --- 星星爆发动画 (已重写) ---
+    function playStarAnimation() {
+        const starOrigin = slotsContainer.getBoundingClientRect();
+        const starDestination = starCounter.getBoundingClientRect();
+
+        for (let i = 0; i < 3; i++) {
+            const star = document.createElement('img');
+            star.src = 'https://img.icons8.com/color/48/star--v1.png';
+            star.className = 'star-particle';
+            star.style.left = `${starOrigin.left + starOrigin.width / 2 - 12}px`;
+            star.style.top = `${starOrigin.top + starOrigin.height / 2 - 12}px`;
+            document.body.appendChild(star);
+
+            setTimeout(() => {
+                const randomX = (Math.random() - 0.5) * 100;
+                const randomY = (Math.random() - 0.5) * 100 - 50;
+                star.style.setProperty('--random-x', `${randomX}px`);
+                star.style.setProperty('--random-y', `${randomY}px`);
+                star.classList.add('animate');
+                
+                setTimeout(() => {
+                    star.style.left = `${starDestination.left + starDestination.width / 2}px`;
+                    star.style.top = `${starDestination.top + starDestination.height / 2}px`;
+                    star.style.transform = 'scale(0)';
+                    star.style.opacity = '0';
+                }, 50);
+
+            }, i * 100);
+
+            star.addEventListener('transitionend', () => { star.remove(); });
+        }
+    }
+
+    // --- 按钮事件绑定 (已更新) ---
     continueBtn.addEventListener('click', () => {
-        playSound('star');
-        starCount++;
-        starCountDisplay.textContent = starCount;
-        currentWordIndex++;
-        loadWord();
+        successFeedback.classList.remove('show');
+        playSound('gold');
+        playStarAnimation();
+        
+        setTimeout(() => {
+            starCount++;
+            starCountDisplay.textContent = starCount;
+            currentWordIndex++;
+            loadWord();
+        }, 1000); // 严格控制在1秒后加载
     });
 
     retryBtn.addEventListener('click', () => {
@@ -249,6 +286,8 @@ document.addEventListener('DOMContentLoaded', () => {
         starCountDisplay.textContent = '0';
         loadWord();
     });
+
+    resetBtn.addEventListener('click', resetCurrentWord);
     
     // --- 结束与重置 ---
     function showEndScreen() {

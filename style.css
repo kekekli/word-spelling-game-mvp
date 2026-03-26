@@ -22,7 +22,7 @@ body {
     align-items: center;
     height: 100vh;
     margin: 0;
-    overflow: hidden; /* 防止元素溢出 */
+    overflow: hidden;
 }
 
 .container {
@@ -52,7 +52,7 @@ body {
 }
 
 .progress-bar-fill {
-    width: 10%; /* 示例：初始进度 */
+    width: 10%;
     height: 100%;
     background-color: var(--main-green);
     border-radius: 10px;
@@ -82,10 +82,9 @@ body {
     align-items: center;
 }
 
-/* 修改后的图片样式 */
 .image-container {
-    max-width: 80%; /* 容器最大宽度为父元素的80% */
-    max-height: 200px; /* 限制一个最大高度，防止图片过高 */
+    max-width: 80%;
+    max-height: 200px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
@@ -94,10 +93,10 @@ body {
 }
 
 #hint-image {
-    max-width: 100%; /* 图片宽度撑满容器 */
-    max-height: 100%; /* 图片高度也撑满容器 */
+    max-width: 100%;
+    max-height: 100%;
     display: block;
-    border-radius: 12px; /* 把圆角和阴影直接加在图片上 */
+    border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
@@ -106,7 +105,7 @@ body {
     color: var(--text-color);
     margin-bottom: 20px;
     text-align: center;
-    visibility: hidden; /* 默认隐藏 */
+    visibility: hidden;
     opacity: 0;
     transition: all 0.3s ease-in-out;
 }
@@ -119,7 +118,7 @@ body {
 .slots {
     display: flex;
     gap: 10px;
-    margin-bottom: 40px;
+    margin-bottom: 20px;
     min-height: 50px;
 }
 
@@ -137,6 +136,31 @@ body {
     color: var(--text-color);
     cursor: pointer;
     transition: all 0.2s ease;
+    text-transform: lowercase;
+}
+
+.reset-container {
+    width: 100%;
+    text-align: right;
+    margin-bottom: 20px;
+    max-width: 450px;
+}
+
+.reset-button {
+    background: none;
+    border: 2px solid var(--slot-border);
+    color: #a0a0a0;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    font-size: 24px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.reset-button:hover {
+    background-color: var(--slot-border);
+    color: var(--text-color);
 }
 
 .letters {
@@ -161,6 +185,7 @@ body {
     cursor: pointer;
     padding: 0 15px;
     transition: all 0.1s ease-in-out;
+    text-transform: lowercase;
 }
 
 .letter-btn:active {
@@ -171,7 +196,6 @@ body {
 .letter-btn.hidden {
     visibility: hidden;
 }
-
 
 /* --- 3. 校验与反馈机制 --- */
 .feedback-bar {
@@ -209,7 +233,6 @@ body {
 .continue-button { background-color: #6BB000; }
 .retry-button { background-color: #D64C4C; }
 
-/* 校验状态下的槽位样式 */
 .slot.correct {
     background-color: var(--main-green);
     border-color: var(--main-green);
@@ -229,7 +252,7 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(255, 255, 255, 0.9);
-    display: none; /* JS控制显示 */
+    display: none;
     justify-content: center;
     align-items: center;
     text-align: center;
@@ -240,26 +263,37 @@ body {
     display: flex;
 }
 
-.end-screen-content {
-    color: var(--text-color);
+/* --- 5. 星星动画 (已更新) --- */
+@keyframes star-burst {
+    0% {
+        transform: scale(0) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: scale(2.5) rotate(180deg); /* 放大到2.5倍并旋转 */
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1.5) rotate(360deg); /* 结束时稍微缩小，更有弹性 */
+        opacity: 1;
+    }
 }
 
-.end-screen-content h2 {
-    font-size: 48px;
-    color: var(--main-green);
-    margin-bottom: 10px;
+.star-particle {
+    position: fixed;
+    width: 24px;
+    height: 24px;
+    pointer-events: none;
+    z-index: 200;
+    opacity: 0;
+    /* 飞行阶段的动画，在JS中触发 */
+    transition: top 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5), 
+                left 0.6s cubic-bezier(0.5, 0, 1, 1), 
+                transform 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5), 
+                opacity 0.4s ease-out 0.2s;
 }
 
-.end-screen-content p {
-    font-size: 24px;
-    margin-bottom: 40px;
-}
-
-.restart-button {
-    background-color: var(--main-blue);
-    border-bottom: 4px solid #1899D6;
-}
-.restart-button:active {
-    transform: translateY(2px);
-    border-bottom-width: 2px;
+.star-particle.animate {
+    /* 爆发阶段的动画 */
+    animation: star-burst 0.4s ease-out forwards;
 }
