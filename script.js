@@ -83,12 +83,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
     const resetBtn = document.getElementById('reset-btn');
 
-    // --- 音效框架 (已更新) ---
+    // --- 音效框架 ---
     const sounds = {
         click: new Audio('assets/click.MP3'),
         success: new Audio('assets/success.MP3'),
         error: new Audio('assets/error.MP3'),
-        gold: new Audio('assets/gold.MP3') // 接入本地收集音效
+        gold: new Audio('assets/gold.MP3')
     };
 
     function playSound(soundName) {
@@ -100,7 +100,8 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // --- 游戏状态变量 ---
-    let currentWordIndex = 0;
+    let currentWordIndex = 0; // 这是指在 shuffledIndices 中的索引
+    let shuffledIndices = []; // 存储打乱后的单词索引
     let starCount = 0;
     let isChecking = false;
 
@@ -111,6 +112,47 @@ document.addEventListener('DOMContentLoaded', () => {
             [array[i], array[j]] = [array[j], array[i]];
         }
         return array;
+    }
+
+    // --- 进度管理 ---
+    const STORAGE_KEY = 'wordSpellingGame_progress';
+
+    function saveProgress() {
+        const progress = {
+            currentWordIndex,
+            shuffledIndices,
+            starCount
+        };
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
+    }
+
+    function loadProgress() {
+        const saved = localStorage.getItem(STORAGE_KEY);
+        if (saved) {
+            const data = JSON.parse(saved);
+            // 验证保存的索引是否与当前数据库长度一致
+            if (data.shuffledIndices && data.shuffledIndices.length === wordDatabase.length) {
+                currentWordIndex = data.currentWordIndex;
+                shuffledIndices = data.shuffledIndices;
+                starCount = data.starCount || 0;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    function initGame(forceNew = false) {
+        if (forceNew || !loadProgress()) {
+            // 生成新进度：打乱所有单词索引
+            currentWordIndex = 0;
+            starCount = 0;
+            shuffledIndices = Array.from({ length: wordDatabase.length }, (_, i) => i);
+            shuffleArray(shuffledIndices);
+            saveProgress();
+        }
+        
+        starCountDisplay.textContent = starCount;
+        loadWord();
     }
 
     // --- 核心函数：加载单词 ---
@@ -128,7 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        const currentWordData = wordDatabase[currentWordIndex];
+        // 获取当前打乱后的单词
+        const actualIndex = shuffledIndices[currentWordIndex];
+        const currentWordData = wordDatabase[actualIndex];
         const word = currentWordData.word;
         const letters = word.split('');
         
@@ -202,7 +246,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const slots = document.querySelectorAll('.slot');
         let filledWord = '';
         slots.forEach(slot => { filledWord += slot.textContent; });
-        if (filledWord === wordDatabase[currentWordIndex].word) {
+        
+        const actualIndex = shuffledIndices[currentWordIndex];
+        if (filledWord === wordDatabase[actualIndex].word) {
             handleSuccess(slots);
         } else {
             handleError(slots);
@@ -213,7 +259,8 @@ document.addEventListener('DOMContentLoaded', () => {
     function handleSuccess(slots) {
         playSound('success');
         slots.forEach(slot => slot.classList.add('correct'));
-        sentenceDisplay.textContent = wordDatabase[currentWordIndex].sentence;
+        const actualIndex = shuffledIndices[currentWordIndex];
+        sentenceDisplay.textContent = wordDatabase[actualIndex].sentence;
         sentenceDisplay.classList.add('visible');
         successFeedback.classList.add('show');
     }
@@ -224,7 +271,7 @@ document.addEventListener('DOMContentLoaded', () => {
         errorFeedback.classList.add('show');
     }
 
-    // --- 星星爆发动画 (已重写) ---
+    // --- 星星爆发动画 ---
     function playStarAnimation() {
         const starOrigin = slotsContainer.getBoundingClientRect();
         const starDestination = starCounter.getBoundingClientRect();
@@ -238,10 +285,6 @@ document.addEventListener('DOMContentLoaded', () => {
             document.body.appendChild(star);
 
             setTimeout(() => {
-                const randomX = (Math.random() - 0.5) * 100;
-                const randomY = (Math.random() - 0.5) * 100 - 50;
-                star.style.setProperty('--random-x', `${randomX}px`);
-                star.style.setProperty('--random-y', `${randomY}px`);
                 star.classList.add('animate');
                 
                 setTimeout(() => {
@@ -257,7 +300,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- 按钮事件绑定 (已更新) ---
+    // --- 按钮事件绑定 ---
     continueBtn.addEventListener('click', () => {
         successFeedback.classList.remove('show');
         playSound('gold');
@@ -267,8 +310,9 @@ document.addEventListener('DOMContentLoaded', () => {
             starCount++;
             starCountDisplay.textContent = starCount;
             currentWordIndex++;
+            saveProgress(); // 每次进入下一题都保存进度
             loadWord();
-        }, 1000); // 严格控制在1秒后加载
+        }, 1000);
     });
 
     retryBtn.addEventListener('click', () => {
@@ -281,10 +325,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     restartBtn.addEventListener('click', () => {
         endScreen.classList.remove('show');
-        currentWordIndex = 0;
-        starCount = 0;
-        starCountDisplay.textContent = '0';
-        loadWord();
+        initGame(true); // 强制重新开始并洗牌
     });
 
     resetBtn.addEventListener('click', resetCurrentWord);
@@ -297,5 +338,5 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // --- 游戏启动 ---
-    loadWord();
+    initGame();
 });

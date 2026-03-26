@@ -97,7 +97,7 @@ body {
     max-height: 100%;
     display: block;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .sentence {
@@ -117,21 +117,24 @@ body {
 
 .slots {
     display: flex;
-    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
     margin-bottom: 20px;
     min-height: 50px;
+    width: 100%;
 }
 
 .slot {
-    width: 50px;
-    height: 50px;
+    width: clamp(35px, 10vw, 50px);
+    height: clamp(35px, 10vw, 50px);
     background-color: var(--slot-bg);
     border: 2px solid var(--slot-border);
     border-radius: 12px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 28px;
+    font-size: clamp(20px, 6vw, 28px);
     font-weight: 800;
     color: var(--text-color);
     cursor: pointer;
@@ -167,23 +170,23 @@ body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 10px;
-    max-width: 450px;
+    gap: 8px;
+    max-width: 100%;
 }
 
 .letter-btn {
-    min-width: 45px;
-    height: 50px;
+    min-width: clamp(35px, 9vw, 45px);
+    height: clamp(40px, 10vw, 50px);
     background-color: var(--main-blue);
     color: white;
     border: none;
     border-bottom: 4px solid #1899D6;
     border-radius: 12px;
-    font-size: 24px;
+    font-size: clamp(18px, 5vw, 24px);
     font-weight: 700;
     font-family: inherit;
     cursor: pointer;
-    padding: 0 15px;
+    padding: 0 10px;
     transition: all 0.1s ease-in-out;
     text-transform: lowercase;
 }
@@ -214,10 +217,17 @@ body {
     transform: translateY(0);
 }
 
-.feedback-bar.success { background-color: var(--main-green); }
-.feedback-bar.error { background-color: var(--main-red); }
+.feedback-bar.success {
+    background-color: var(--main-green);
+}
 
-.continue-button, .retry-button, .restart-button {
+.feedback-bar.error {
+    background-color: var(--main-red);
+}
+
+.continue-button,
+.retry-button,
+.restart-button {
     padding: 15px 30px;
     border: none;
     border-radius: 12px;
@@ -230,14 +240,20 @@ body {
     max-width: 300px;
 }
 
-.continue-button { background-color: #6BB000; }
-.retry-button { background-color: #D64C4C; }
+.continue-button {
+    background-color: #6BB000;
+}
+
+.retry-button {
+    background-color: #D64C4C;
+}
 
 .slot.correct {
     background-color: var(--main-green);
     border-color: var(--main-green);
     color: white;
 }
+
 .slot.incorrect {
     background-color: var(--main-red);
     border-color: var(--main-red);
@@ -269,12 +285,16 @@ body {
         transform: scale(0) rotate(0deg);
         opacity: 0.5;
     }
+
     50% {
-        transform: scale(2.5) rotate(180deg); /* 放大到2.5倍并旋转 */
+        transform: scale(6.5) rotate(180deg);
+        /* 放大到2.5倍并旋转 */
         opacity: 1;
     }
+
     100% {
-        transform: scale(1.5) rotate(360deg); /* 结束时稍微缩小，更有弹性 */
+        transform: scale(4.5) rotate(360deg);
+        /* 结束时稍微缩小，更有弹性 */
         opacity: 1;
     }
 }
@@ -287,10 +307,10 @@ body {
     z-index: 200;
     opacity: 0;
     /* 飞行阶段的动画，在JS中触发 */
-    transition: top 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5), 
-                left 0.6s cubic-bezier(0.5, 0, 1, 1), 
-                transform 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5), 
-                opacity 0.4s ease-out 0.2s;
+    transition: top 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5),
+        left 0.6s cubic-bezier(0.5, 0, 1, 1),
+        transform 0.6s cubic-bezier(0.5, -0.5, 0.5, 1.5),
+        opacity 0.4s ease-out 0.2s;
 }
 
 .star-particle.animate {
