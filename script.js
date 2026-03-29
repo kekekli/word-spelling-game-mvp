@@ -1,77 +1,151 @@
-// 原始单词数据库
-const wordDatabaseRaw = [
-    // Unit 3
-    { "word": "TALK", "sentence": "We talk to friends." },
-    { "word": "SONG", "sentence": "I sing a song." },
-    { "word": "OR", "sentence": "An apple or a banana?" },
-    { "word": "MUCH", "sentence": "Thank you very much." },
-    { "word": "ERASER", "sentence": "I have a new eraser." },
-    { "word": "FIND", "sentence": "I can find my pen." },
-    { "word": "RULER", "sentence": "This is a long ruler." },
-    { "word": "PEN", "sentence": "I write with a pen." },
-    { "word": "PENCIL", "sentence": "The pencil is yellow." },
-    { "word": "BOOK", "sentence": "I read a good book." },
-    { "word": "BAG", "sentence": "My bag is heavy." },
-    { "word": "PAPER", "sentence": "I draw on the paper." },
-    { "word": "THESE", "sentence": "These are my pens." },
-    { "word": "SEE", "sentence": "I see a bird." },
-    { "word": "SMELL", "sentence": "I smell the flower." },
-    { "word": "TASTE", "sentence": "I taste the sweet candy." },
-    { "word": "HEAR", "sentence": "I hear a dog." },
-    { "word": "TOUCH", "sentence": "Touch your nose." },
-    { "word": "LEARN", "sentence": "We learn English." },
-    { "word": "NOSE", "sentence": "This is my nose." },
-    { "word": "TONGUE", "sentence": "Show me your tongue." },
-    { "word": "CLASS", "sentence": "I like my class." },
-    { "word": "COMPUTER", "sentence": "I play on the computer." },
+// 核心数据库 (Unit 1 - Unit 6)
+const wordDatabaseRaw = {
+    "Unit 1": [
+        { "word": "where", "sentence": "Where is my book?", "chinese": "在哪里" },
+        { "word": "from", "sentence": "Where are you from?", "chinese": "来自" },
+        { "word": "about", "sentence": "It is about ten o'clock.", "chinese": "大约" },
+        { "word": "today", "sentence": "Today is a sunny day.", "chinese": "今天" },
+        { "word": "teacher", "sentence": "This is my English teacher.", "chinese": "教师" },
+        { "word": "student", "sentence": "I am a good student.", "chinese": "学生" },
+        { "word": "after", "sentence": "I play after school.", "chinese": "在...之后" },
+        { "word": "who", "sentence": "Who is that girl?", "chinese": "谁" },
+        { "word": "girl", "sentence": "The girl is my friend.", "chinese": "女孩" },
+        { "word": "neighbour", "sentence": "He is my new neighbour.", "chinese": "邻居" },
+        { "word": "boy", "sentence": "The boy is playing ball.", "chinese": "男孩" },
+        { "word": "woman", "sentence": "The woman is my mother.", "chinese": "女人" },
+        { "word": "man", "sentence": "The man is my father.", "chinese": "男人" },
+        { "word": "mr", "sentence": "This is Mr. Black.", "chinese": "先生" },
+        { "word": "classmate", "sentence": "She is my classmate.", "chinese": "同学" },
+        { "word": "he", "sentence": "He is very tall.", "chinese": "他" },
+        { "word": "english", "sentence": "I like English class.", "chinese": "英语" },
+        { "word": "she", "sentence": "She has a cat.", "chinese": "她" },
+        { "word": "very", "sentence": "It is very cold today.", "chinese": "很/非常" },
+        { "word": "uk", "sentence": "He is from the UK.", "chinese": "英国" },
+        { "word": "china", "sentence": "I love China.", "chinese": "中国" },
+        { "word": "canada", "sentence": "Canada is very big.", "chinese": "加拿大" }
+    ],
+    "Unit 2": [
+        { "word": "has", "sentence": "She has long hair.", "chinese": "有" },
+        { "word": "long", "sentence": "The ruler is long.", "chinese": "长的" },
+        { "word": "body", "sentence": "This is my body.", "chinese": "身体" },
+        { "word": "short", "sentence": "The pencil is short.", "chinese": "短的" },
+        { "word": "leg", "sentence": "I have two legs.", "chinese": "腿" },
+        { "word": "right", "sentence": "You are right.", "chinese": "正确" },
+        { "word": "fat", "sentence": "The cat is fat.", "chinese": "胖的" },
+        { "word": "thin", "sentence": "The dog is thin.", "chinese": "瘦的" },
+        { "word": "slow", "sentence": "The turtle is slow.", "chinese": "慢的" },
+        { "word": "love", "sentence": "I love my family.", "chinese": "爱" },
+        { "word": "tail", "sentence": "The rabbit has a short tail.", "chinese": "尾巴" },
+        { "word": "her", "sentence": "This is her bag.", "chinese": "她的" },
+        { "word": "gift", "sentence": "This is a gift for you.", "chinese": "礼物" },
+        { "word": "picture", "sentence": "Look at the picture.", "chinese": "图画" },
+        { "word": "card", "sentence": "I have a birthday card.", "chinese": "卡片" },
+        { "word": "sing", "sentence": "I can sing a song.", "chinese": "唱" },
+        { "word": "dance", "sentence": "She can dance well.", "chinese": "跳舞" },
+        { "word": "face", "sentence": "Wash your face.", "chinese": "脸" },
+        { "word": "all", "sentence": "We are all friends.", "chinese": "全部" },
+        { "word": "so", "sentence": "It is so big!", "chinese": "这么/那么" }
+    ],
+    "Unit 3": [
+        { "word": "eraser", "sentence": "I have a new eraser.", "chinese": "橡皮" },
+        { "word": "find", "sentence": "I can find my pen.", "chinese": "找到" },
+        { "word": "ruler", "sentence": "This is a long ruler.", "chinese": "直尺" },
+        { "word": "pen", "sentence": "I write with a pen.", "chinese": "钢笔" },
+        { "word": "pencil", "sentence": "The pencil is yellow.", "chinese": "铅笔" },
+        { "word": "book", "sentence": "I read a good book.", "chinese": "书" },
+        { "word": "bag", "sentence": "My bag is heavy.", "chinese": "包" },
+        { "word": "paper", "sentence": "I draw on the paper.", "chinese": "纸" },
+        { "word": "these", "sentence": "These are my pens.", "chinese": "这些" },
+        { "word": "see", "sentence": "I see a bird.", "chinese": "看见" },
+        { "word": "smell", "sentence": "I smell the flower.", "chinese": "闻" },
+        { "word": "taste", "sentence": "I taste the sweet candy.", "chinese": "尝" },
+        { "word": "hear", "sentence": "I hear a dog.", "chinese": "听见" },
+        { "word": "touch", "sentence": "Touch your nose.", "chinese": "触摸" },
+        { "word": "learn", "sentence": "We learn English.", "chinese": "学习" },
+        { "word": "nose", "sentence": "This is my nose.", "chinese": "鼻子" },
+        { "word": "tongue", "sentence": "Show me your tongue.", "chinese": "舌头" },
+        { "word": "class", "sentence": "I like my class.", "chinese": "课" },
+        { "word": "computer", "sentence": "I play on the computer.", "chinese": "计算机" }
+    ],
+    "Unit 4": [
+        { "word": "bread", "sentence": "I like bread.", "chinese": "面包" },
+        { "word": "egg", "sentence": "I eat an egg.", "chinese": "鸡蛋" },
+        { "word": "milk", "sentence": "I drink milk.", "chinese": "牛奶" },
+        { "word": "noodle", "sentence": "I love noodles.", "chinese": "面条" },
+        { "word": "juice", "sentence": "I drink apple juice.", "chinese": "果汁" },
+        { "word": "rice", "sentence": "I eat rice.", "chinese": "大米" },
+        { "word": "meat", "sentence": "I like meat.", "chinese": "肉" },
+        { "word": "vegetable", "sentence": "I eat vegetables.", "chinese": "蔬菜" },
+        { "word": "healthy", "sentence": "Apples are healthy.", "chinese": "健康的" },
+        { "word": "plate", "sentence": "Put it on the plate.", "chinese": "盘子" },
+        { "word": "soup", "sentence": "The soup is hot.", "chinese": "汤" },
+        { "word": "fruit", "sentence": "I like red fruit.", "chinese": "水果" },
+        { "word": "colourful", "sentence": "The bird is colourful.", "chinese": "五彩缤纷" },
+        { "word": "candy", "sentence": "I eat sweet candy.", "chinese": "糖果" },
+        { "word": "yummy", "sentence": "The cake is yummy.", "chinese": "好吃的" },
+        { "word": "breakfast", "sentence": "I eat breakfast.", "chinese": "早餐" },
+        { "word": "time", "sentence": "What time is it?", "chinese": "时间" }
+    ],
+    "Unit 5": [
+        { "word": "box", "sentence": "Put it in the box.", "chinese": "盒子" },
+        { "word": "cap", "sentence": "I have a blue cap.", "chinese": "帽子" },
+        { "word": "map", "sentence": "Look at the map.", "chinese": "地图" },
+        { "word": "under", "sentence": "The cat is under the table.", "chinese": "在...下面" },
+        { "word": "still", "sentence": "It is still raining.", "chinese": "仍然" },
+        { "word": "put", "sentence": "Put your book on the desk.", "chinese": "放" },
+        { "word": "at", "sentence": "Look at me.", "chinese": "在" },
+        { "word": "boat", "sentence": "I see a boat.", "chinese": "小船" },
+        { "word": "cool", "sentence": "This car is cool.", "chinese": "酷的" },
+        { "word": "keep", "sentence": "Keep your room clean.", "chinese": "保有" },
+        { "word": "home", "sentence": "I go home.", "chinese": "家" },
+        { "word": "ball", "sentence": "I play with a ball.", "chinese": "球" },
+        { "word": "doll", "sentence": "She has a doll.", "chinese": "玩偶" },
+        { "word": "car", "sentence": "The car is fast.", "chinese": "汽车" },
+        { "word": "on", "sentence": "The book is on the desk.", "chinese": "在...上" },
+        { "word": "shelf", "sentence": "The book is on the shelf.", "chinese": "架子" },
+        { "word": "in", "sentence": "The pen is in the bag.", "chinese": "在...内" }
+    ],
+    "Unit 6": [
+        { "word": "thirteen", "sentence": "I have thirteen books.", "chinese": "13" },
+        { "word": "eleven", "sentence": "Eleven comes after ten.", "chinese": "11" },
+        { "word": "twenty", "sentence": "Twenty is a big number.", "chinese": "20" },
+        { "word": "seventeen", "sentence": "I am seventeen.", "chinese": "17" },
+        { "word": "sixteen", "sentence": "Sixteen stars in the sky.", "chinese": "16" },
+        { "word": "eighteen", "sentence": "Eighteen apples.", "chinese": "18" },
+        { "word": "nineteen", "sentence": "Nineteen pencils.", "chinese": "19" },
+        { "word": "pay", "sentence": "You need to pay for it.", "chinese": "付费" },
+        { "word": "back", "sentence": "Please come back.", "chinese": "回到原处" },
+        { "word": "fifteen", "sentence": "Fifteen flowers.", "chinese": "15" },
+        { "word": "twelve", "sentence": "Twelve months a year.", "chinese": "12" },
+        { "word": "fourteen", "sentence": "I have fourteen cards.", "chinese": "14" }
+    ]
+};
 
-    // Unit 4
-    { "word": "BREAKFAST", "sentence": "I eat breakfast." },
-    { "word": "TIME", "sentence": "What time is it?" },
-    { "word": "BREAD", "sentence": "I like bread." },
-    { "word": "EGG", "sentence": "I eat an egg." },
-    { "word": "MILK", "sentence": "I drink milk." },
-    { "word": "NOODLE", "sentence": "I love noodles." },
-    { "word": "JUICE", "sentence": "I drink apple juice." },
-    { "word": "RICE", "sentence": "I eat rice." },
-    { "word": "MEAT", "sentence": "I like meat." },
-    { "word": "VEGETABLE", "sentence": "I eat vegetables." },
-    { "word": "HEALTHY", "sentence": "Apples are healthy." },
-    { "word": "PLATE", "sentence": "Put it on the plate." },
-    { "word": "SOUP", "sentence": "The soup is hot." },
-    { "word": "FRUIT", "sentence": "I like red fruit." },
-    { "word": "COLOURFUL", "sentence": "The bird is colourful." },
-    { "word": "CANDY", "sentence": "I eat sweet candy." },
-    { "word": "YUMMY", "sentence": "The cake is yummy." },
-
-    // Unit 5
-    { "word": "AT", "sentence": "Look at me." },
-    { "word": "BOAT", "sentence": "I see a boat." },
-    { "word": "COOL", "sentence": "This car is cool." },
-    { "word": "KEEP", "sentence": "Keep your room clean." },
-    { "word": "HOME", "sentence": "I go home." },
-    { "word": "BALL", "sentence": "I play with a ball." },
-    { "word": "DOLL", "sentence": "She has a doll." },
-    { "word": "CAR", "sentence": "The car is fast." },
-    { "word": "ON", "sentence": "The book is on the desk." },
-    { "word": "SHELF", "sentence": "The book is on the shelf." },
-    { "word": "IN", "sentence": "The pen is in the bag." }
-];
-
-const wordDatabase = wordDatabaseRaw.map(item => ({
-    ...item,
-    word: item.word.toLowerCase(),
-    image: `assets/images/${item.word.toLowerCase()}.jpg`
-}));
-
+// 预处理数据库
+const wordDatabase = {};
+Object.keys(wordDatabaseRaw).forEach(unit => {
+    wordDatabase[unit] = wordDatabaseRaw[unit].map(item => ({
+        ...item,
+        word: item.word.toLowerCase(),
+        image: `assets/images/${item.word.toLowerCase().replace(/\s+/g, '')}.jpg`
+    }));
+});
 
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM 元素获取 ---
+    // --- DOM 元素 ---
+    const menuScreen = document.getElementById('menu-screen');
+    const gameScreen = document.getElementById('game-screen');
+    const unitGrid = document.getElementById('unit-grid');
+    const notebookBtn = document.getElementById('notebook-btn');
+    const mistakeCountDisplay = document.getElementById('mistake-count');
+    const backToMenuBtn = document.getElementById('back-to-menu');
+    const lampBtn = document.getElementById('lamp-btn');
+    const chineseHintOverlay = document.getElementById('chinese-hint');
+    
     const hintImage = document.getElementById('hint-image');
     const slotsContainer = document.getElementById('slots-container');
     const lettersContainer = document.getElementById('letters-container');
     const sentenceDisplay = document.getElementById('sentence-display');
-    const starCounter = document.querySelector('.star-counter');
     const starCountDisplay = document.getElementById('star-count');
     const progressBarFill = document.querySelector('.progress-bar-fill');
     const successFeedback = document.getElementById('success-feedback');
@@ -83,79 +157,124 @@ document.addEventListener('DOMContentLoaded', () => {
     const restartBtn = document.getElementById('restart-btn');
     const resetBtn = document.getElementById('reset-btn');
 
-    // --- 音效框架 ---
+    // --- 音效 ---
     const sounds = {
         click: new Audio('assets/click.MP3'),
         success: new Audio('assets/success.MP3'),
         error: new Audio('assets/error.MP3'),
-        gold: new Audio('assets/gold.MP3')
+        gold: new Audio('assets/gold.MP3'),
+        select: new Audio('assets/select.mp3')
     };
 
-    function playSound(soundName) {
-        const sound = sounds[soundName];
-        if (sound) {
-            sound.currentTime = 0;
-            sound.play().catch(e => console.log(`无法播放音效: ${e.message}`));
-        }
+    function playSound(name) {
+        const s = sounds[name];
+        if (s) { s.currentTime = 0; s.play().catch(() => {}); }
     }
-    
-    // --- 游戏状态变量 ---
-    let currentWordIndex = 0; // 这是指在 shuffledIndices 中的索引
-    let shuffledIndices = []; // 存储打乱后的单词索引
+
+    // --- 游戏状态 ---
+    let currentUnit = "";
+    let currentWords = [];
+    let currentWordIndex = 0;
+    let shuffledIndices = [];
     let starCount = 0;
     let isChecking = false;
+    let isNotebookMode = false;
+    let hintIndex = -1; // 随机提示字母的索引
 
-    // --- 工具函数：打乱数组 ---
-    function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1));
-            [array[i], array[j]] = [array[j], array[i]];
+    // --- 存储管理 ---
+    const PROGRESS_KEY = 'wordGame_unitProgress';
+    const MISTAKES_KEY = 'wordGame_permanentMistakes';
+
+    function getMistakes() { return JSON.parse(localStorage.getItem(MISTAKES_KEY)) || []; }
+    function saveMistake(wordObj) {
+        let mistakes = getMistakes();
+        if (!mistakes.find(m => m.word === wordObj.word)) {
+            mistakes.push(wordObj);
+            localStorage.setItem(MISTAKES_KEY, JSON.stringify(mistakes));
+            updateMenuUI();
         }
-        return array;
+    }
+    function removeMistake(word) {
+        let mistakes = getMistakes();
+        mistakes = mistakes.filter(m => m.word !== word);
+        localStorage.setItem(MISTAKES_KEY, JSON.stringify(mistakes));
+        updateMenuUI();
+    }
+    function saveUnitProgress() {
+        if (isNotebookMode) return;
+        let allProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+        allProgress[currentUnit] = { currentWordIndex, shuffledIndices, starCount };
+        localStorage.setItem(PROGRESS_KEY, JSON.stringify(allProgress));
+    }
+    function loadUnitProgress(unit) {
+        let allProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+        return allProgress[unit];
     }
 
-    // --- 进度管理 ---
-    const STORAGE_KEY = 'wordSpellingGame_progress';
-
-    function saveProgress() {
-        const progress = {
-            currentWordIndex,
-            shuffledIndices,
-            starCount
-        };
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(progress));
-    }
-
-    function loadProgress() {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        if (saved) {
-            const data = JSON.parse(saved);
-            // 验证保存的索引是否与当前数据库长度一致
-            if (data.shuffledIndices && data.shuffledIndices.length === wordDatabase.length) {
-                currentWordIndex = data.currentWordIndex;
-                shuffledIndices = data.shuffledIndices;
-                starCount = data.starCount || 0;
-                return true;
-            }
+    // --- 界面切换 ---
+    function showScreen(screenId) {
+        [menuScreen, gameScreen, endScreen].forEach(s => s.classList.remove('active', 'show'));
+        if (screenId === 'menu') {
+            menuScreen.classList.add('active');
+            updateMenuUI();
+        } else if (screenId === 'game') {
+            gameScreen.classList.add('active');
         }
-        return false;
     }
 
-    function initGame(forceNew = false) {
-        if (forceNew || !loadProgress()) {
-            // 生成新进度：打乱所有单词索引
+    function updateMenuUI() {
+        unitGrid.innerHTML = '';
+        const allProgress = JSON.parse(localStorage.getItem(PROGRESS_KEY)) || {};
+        Object.keys(wordDatabase).forEach(unit => {
+            const card = document.createElement('div');
+            card.className = 'unit-card';
+            const progress = allProgress[unit] ? allProgress[unit].currentWordIndex : 0;
+            const total = wordDatabase[unit].length;
+            card.innerHTML = `<h3>${unit}</h3><div class="progress-text">${progress}/${total} 完成</div>`;
+            card.onclick = () => startUnit(unit);
+            unitGrid.appendChild(card);
+        });
+        const mistakes = getMistakes();
+        mistakeCountDisplay.textContent = mistakes.length;
+        notebookBtn.style.opacity = mistakes.length > 0 ? "1" : "0.5";
+    }
+
+    // --- 核心逻辑 ---
+    function startUnit(unit) {
+        playSound('select');
+        currentUnit = unit;
+        isNotebookMode = false;
+        currentWords = wordDatabase[unit];
+        const saved = loadUnitProgress(unit);
+        if (saved && saved.shuffledIndices.length === currentWords.length) {
+            currentWordIndex = saved.currentWordIndex;
+            shuffledIndices = saved.shuffledIndices;
+            starCount = saved.starCount;
+        } else {
             currentWordIndex = 0;
             starCount = 0;
-            shuffledIndices = Array.from({ length: wordDatabase.length }, (_, i) => i);
+            shuffledIndices = Array.from({length: currentWords.length}, (_, i) => i);
             shuffleArray(shuffledIndices);
-            saveProgress();
+            saveUnitProgress();
         }
-        
-        starCountDisplay.textContent = starCount;
+        showScreen('game');
         loadWord();
     }
 
-    // --- 核心函数：加载单词 ---
+    function startNotebook() {
+        const mistakes = getMistakes();
+        if (mistakes.length === 0) return;
+        playSound('select');
+        isNotebookMode = true;
+        currentWords = mistakes;
+        currentWordIndex = 0;
+        starCount = 0;
+        shuffledIndices = Array.from({length: currentWords.length}, (_, i) => i);
+        shuffleArray(shuffledIndices);
+        showScreen('game');
+        loadWord();
+    }
+
     function loadWord() {
         isChecking = false;
         successFeedback.classList.remove('show');
@@ -163,180 +282,184 @@ document.addEventListener('DOMContentLoaded', () => {
         slotsContainer.innerHTML = '';
         lettersContainer.innerHTML = '';
         sentenceDisplay.classList.remove('visible');
-        hintImage.src = '';
+        chineseHintOverlay.classList.remove('show');
+        hintIndex = -1;
 
-        if (currentWordIndex >= wordDatabase.length) {
+        if (currentWordIndex >= currentWords.length) {
             showEndScreen();
             return;
         }
 
-        // 获取当前打乱后的单词
-        const actualIndex = shuffledIndices[currentWordIndex];
-        const currentWordData = wordDatabase[actualIndex];
-        const word = currentWordData.word;
+        const wordObj = currentWords[shuffledIndices[currentWordIndex]];
+        const word = wordObj.word;
         const letters = word.split('');
-        
-        hintImage.src = currentWordData.image;
+
+        hintImage.src = wordObj.image;
         hintImage.onerror = () => { hintImage.style.visibility = 'hidden'; };
         hintImage.onload = () => { hintImage.style.visibility = 'visible'; };
 
-        letters.forEach(() => {
+        // 随机提示逻辑：长度 >= 4 且非首位 (错题本模式不提示)
+        if (!isNotebookMode && word.length >= 4) {
+            hintIndex = Math.floor(Math.random() * (word.length - 1)) + 1;
+        }
+
+        letters.forEach((char, i) => {
             const slot = document.createElement('div');
             slot.className = 'slot';
+            if (i === hintIndex) {
+                slot.textContent = char;
+                slot.dataset.letter = char;
+                slot.classList.add('hint-slot');
+                slot.dataset.isHint = "true";
+            }
             slotsContainer.appendChild(slot);
         });
 
-        const shuffledLetters = shuffleArray([...letters]);
-        shuffledLetters.forEach((letter, index) => {
-            const letterBtn = document.createElement('button');
-            letterBtn.className = 'letter-btn';
-            letterBtn.textContent = letter;
-            letterBtn.dataset.id = index;
-            lettersContainer.appendChild(letterBtn);
-        });
-        
-        const progress = (currentWordIndex / wordDatabase.length) * 100;
-        progressBarFill.style.width = `${progress}%`;
-    }
-
-    // --- 交互逻辑 ---
-    lettersContainer.addEventListener('click', (e) => {
-        if (isChecking || !e.target.classList.contains('letter-btn') || e.target.classList.contains('hidden')) return;
-        playSound('click');
-        const letter = e.target.textContent;
-        const firstEmptySlot = document.querySelector('.slot:not([data-letter])');
-        if (firstEmptySlot) {
-            firstEmptySlot.textContent = letter;
-            firstEmptySlot.dataset.letter = letter;
-            firstEmptySlot.dataset.sourceId = e.target.dataset.id;
-            e.target.classList.add('hidden');
+        // 生成字母池：扣除提示位字母
+        let pool = [...letters];
+        if (hintIndex !== -1) {
+            pool.splice(hintIndex, 1);
         }
-        const allSlotsFilled = ![...document.querySelectorAll('.slot')].some(s => !s.dataset.letter);
-        if (allSlotsFilled) checkWord();
-    });
-
-    slotsContainer.addEventListener('click', (e) => {
-        if (isChecking || !e.target.classList.contains('slot') || !e.target.dataset.letter) return;
-        playSound('click');
-        const sourceId = e.target.dataset.sourceId;
-        const letterButtonToShow = document.querySelector(`.letter-btn[data-id='${sourceId}']`);
-        if (letterButtonToShow) letterButtonToShow.classList.remove('hidden');
-        e.target.textContent = '';
-        delete e.target.dataset.letter;
-        delete e.target.dataset.sourceId;
-    });
-
-    function resetCurrentWord() {
-        if (isChecking) return;
-        playSound('click');
-        const filledSlots = document.querySelectorAll('.slot[data-letter]');
-        filledSlots.forEach(slot => {
-            const sourceId = slot.dataset.sourceId;
-            const letterButtonToShow = document.querySelector(`.letter-btn[data-id='${sourceId}']`);
-            if (letterButtonToShow) letterButtonToShow.classList.remove('hidden');
-            slot.textContent = '';
-            delete slot.dataset.letter;
-            delete slot.dataset.sourceId;
+        shuffleArray(pool).forEach((l, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'letter-btn';
+            btn.textContent = l;
+            btn.dataset.id = i;
+            lettersContainer.appendChild(btn);
         });
+
+        starCountDisplay.textContent = starCount;
+        progressBarFill.style.width = `${(currentWordIndex / currentWords.length) * 100}%`;
     }
 
-    // --- 核心：校验单词 ---
     function checkWord() {
         isChecking = true;
         const slots = document.querySelectorAll('.slot');
-        let filledWord = '';
-        slots.forEach(slot => { filledWord += slot.textContent; });
-        
-        const actualIndex = shuffledIndices[currentWordIndex];
-        if (filledWord === wordDatabase[actualIndex].word) {
-            handleSuccess(slots);
+        let filled = "";
+        slots.forEach(s => filled += s.textContent);
+        const wordObj = currentWords[shuffledIndices[currentWordIndex]];
+        if (filled === wordObj.word) {
+            playSound('success');
+            slots.forEach(s => s.classList.add('correct'));
+            sentenceDisplay.textContent = wordObj.sentence;
+            sentenceDisplay.classList.add('visible');
+            successFeedback.classList.add('show');
+            if (isNotebookMode) removeMistake(wordObj.word);
         } else {
-            handleError(slots);
+            playSound('error');
+            slots.forEach(s => s.classList.add('incorrect'));
+            errorFeedback.classList.add('show');
+            saveMistake(wordObj);
         }
     }
 
-    // --- 结果处理 ---
-    function handleSuccess(slots) {
-        playSound('success');
-        slots.forEach(slot => slot.classList.add('correct'));
-        const actualIndex = shuffledIndices[currentWordIndex];
-        sentenceDisplay.textContent = wordDatabase[actualIndex].sentence;
-        sentenceDisplay.classList.add('visible');
-        successFeedback.classList.add('show');
-    }
+    // --- 交互事件 ---
+    lampBtn.onclick = () => {
+        const wordObj = currentWords[shuffledIndices[currentWordIndex]];
+        chineseHintOverlay.textContent = wordObj.chinese;
+        chineseHintOverlay.classList.add('show');
+        setTimeout(() => { chineseHintOverlay.classList.remove('show'); }, 1000);
+    };
 
-    function handleError(slots) {
-        playSound('error');
-        slots.forEach(slot => slot.classList.add('incorrect'));
-        errorFeedback.classList.add('show');
-    }
-
-    // --- 星星爆发动画 ---
-    function playStarAnimation() {
-        const starOrigin = slotsContainer.getBoundingClientRect();
-        const starDestination = starCounter.getBoundingClientRect();
-
-        for (let i = 0; i < 3; i++) {
-            const star = document.createElement('img');
-            star.src = 'https://img.icons8.com/ios-filled/48/FFC107/star--v1.png';
-            star.className = 'star-particle';
-            star.style.left = `${starOrigin.left + starOrigin.width / 2 - 12}px`;
-            star.style.top = `${starOrigin.top + starOrigin.height / 2 - 12}px`;
-            document.body.appendChild(star);
-
-            setTimeout(() => {
-                star.classList.add('animate');
-                
-                setTimeout(() => {
-                    star.style.left = `${starDestination.left + starDestination.width / 2}px`;
-                    star.style.top = `${starDestination.top + starDestination.height / 2}px`;
-                    star.style.transform = 'scale(0)';
-                    star.style.opacity = '0';
-                }, 50);
-
-            }, i * 100);
-
-            star.addEventListener('transitionend', () => { star.remove(); });
+    lettersContainer.onclick = (e) => {
+        if (isChecking || !e.target.classList.contains('letter-btn') || e.target.classList.contains('hidden')) return;
+        playSound('click');
+        const slot = document.querySelector('.slot:not([data-letter])');
+        if (slot) {
+            slot.textContent = e.target.textContent;
+            slot.dataset.letter = e.target.textContent;
+            slot.dataset.sourceId = e.target.dataset.id;
+            e.target.classList.add('hidden');
+            if (!document.querySelector('.slot:not([data-letter])')) checkWord();
         }
-    }
+    };
 
-    // --- 按钮事件绑定 ---
-    continueBtn.addEventListener('click', () => {
+    slotsContainer.onclick = (e) => {
+        if (isChecking || !e.target.classList.contains('slot') || !e.target.dataset.letter || e.target.dataset.isHint) return;
+        playSound('click');
+        const btn = document.querySelector(`.letter-btn[data-id='${e.target.dataset.sourceId}']`);
+        if (btn) btn.classList.remove('hidden');
+        e.target.textContent = '';
+        delete e.target.dataset.letter;
+    };
+
+    continueBtn.onclick = () => {
         successFeedback.classList.remove('show');
         playSound('gold');
         playStarAnimation();
-        
         setTimeout(() => {
             starCount++;
-            starCountDisplay.textContent = starCount;
             currentWordIndex++;
-            saveProgress(); // 每次进入下一题都保存进度
+            saveUnitProgress();
             loadWord();
-        }, 1000);
-    });
+        }, 800);
+    };
 
-    retryBtn.addEventListener('click', () => {
+    retryBtn.onclick = () => {
         isChecking = false;
         errorFeedback.classList.remove('show');
-        document.querySelectorAll('.slot').forEach(slot => {
-            slot.classList.remove('incorrect');
+        document.querySelectorAll('.slot:not([data-is-hint])').forEach(s => {
+            s.classList.remove('incorrect');
+            const btn = document.querySelector(`.letter-btn[data-id='${s.dataset.sourceId}']`);
+            if (btn) btn.classList.remove('hidden');
+            s.textContent = '';
+            delete s.dataset.letter;
         });
-    });
+    };
 
-    restartBtn.addEventListener('click', () => {
-        endScreen.classList.remove('show');
-        initGame(true); // 强制重新开始并洗牌
-    });
+    resetBtn.onclick = () => {
+        if (isChecking) return;
+        playSound('click');
+        document.querySelectorAll('.slot[data-letter]:not([data-is-hint])').forEach(s => {
+            const btn = document.querySelector(`.letter-btn[data-id='${s.dataset.sourceId}']`);
+            if (btn) btn.classList.remove('hidden');
+            s.textContent = '';
+            delete s.dataset.letter;
+        });
+    };
 
-    resetBtn.addEventListener('click', resetCurrentWord);
-    
-    // --- 结束与重置 ---
+    backToMenuBtn.onclick = () => { playSound('click'); showScreen('menu'); };
+    restartBtn.onclick = () => showScreen('menu');
+    notebookBtn.onclick = startNotebook;
+
+    function playStarAnimation() {
+        const origin = slotsContainer.getBoundingClientRect();
+        const dest = document.querySelector('.star-counter').getBoundingClientRect();
+        for (let i = 0; i < 3; i++) {
+            const s = document.createElement('img');
+            s.src = 'https://img.icons8.com/ios-filled/48/FFC107/star--v1.png';
+            s.className = 'star-particle';
+            s.style.left = `${origin.left + origin.width/2 - 12}px`;
+            s.style.top = `${origin.top + origin.height/2 - 12}px`;
+            document.body.appendChild(s);
+            setTimeout(() => {
+                s.classList.add('animate');
+                setTimeout(() => {
+                    s.style.left = `${dest.left + dest.width/2}px`;
+                    s.style.top = `${dest.top + dest.height/2}px`;
+                    s.style.transform = 'scale(0)';
+                    s.style.opacity = '0';
+                }, 50);
+            }, i * 100);
+            s.ontransitionend = () => s.remove();
+        }
+    }
+
     function showEndScreen() {
         finalStarCount.textContent = starCount;
         progressBarFill.style.width = '100%';
+        document.getElementById('end-title').textContent = isNotebookMode ? "清空啦!" : "单元完成!";
+        document.getElementById('end-message').textContent = isNotebookMode ? "你消灭了本次所有错题，太棒了！" : `你完成了 ${currentUnit}，收集了 ${starCount} 颗星星！`;
         endScreen.classList.add('show');
     }
 
-    // --- 游戏启动 ---
-    initGame();
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    showScreen('menu');
 });

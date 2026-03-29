@@ -3,48 +3,71 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>单词拼写小游戏 (MVP)</title>
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
     <div class="container">
-        <!-- 1. 顶部状态栏 -->
-        <header class="header">
-            <div class="progress-bar">
-                <div class="progress-bar-fill"></div>
+        <!-- 1. 主菜单 -->
+        <div id="menu-screen" class="screen active">
+            <header class="menu-header">
+                <h1>单词大闯关</h1>
+                <p>选择一个单元开始学习吧！</p>
+            </header>
+            <div class="unit-grid" id="unit-grid">
+                <!-- 由 JS 动态生成 Unit 按钮 -->
             </div>
-            <div class="star-counter">
-                <img src="https://img.icons8.com/ios-filled/48/FFC107/star--v1.png" alt="Star Icon">
-                <span id="star-count">0</span>
+            <div class="mistake-container">
+                <button id="notebook-btn" class="notebook-button">
+                    📓 我的错题本 (<span id="mistake-count">0</span>)
+                </button>
             </div>
-        </header>
+        </div>
 
         <!-- 2. 游戏主面板 -->
-        <main class="game-board">
-            <div class="image-container">
-                <img id="hint-image" src="" alt="单词提示">
-            </div>
+        <div id="game-screen" class="screen">
+            <header class="header">
+                <button id="back-to-menu" class="back-btn">⬅</button>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill"></div>
+                </div>
+                <div class="star-counter">
+                    <img src="https://img.icons8.com/ios-filled/48/FFC107/star--v1.png" alt="Star Icon">
+                    <span id="star-count">0</span>
+                </div>
+            </header>
 
-            <p class="sentence" id="sentence-display"></p>
+            <main class="game-board">
+                <div class="image-area">
+                    <div class="image-container">
+                        <img id="hint-image" src="" alt="单词提示">
+                        <!-- 中文闪现层 -->
+                        <div id="chinese-hint" class="chinese-hint-overlay"></div>
+                    </div>
+                    <!-- 灵感小灯泡 -->
+                    <button id="lamp-btn" class="lamp-button" title="点击查看中文提示">💡</button>
+                </div>
 
-            <div class="slots" id="slots-container">
-                <!-- JS 会在此处动态生成槽位 -->
-            </div>
+                <p class="sentence" id="sentence-display"></p>
 
-            <!-- 【优化2】新增重做按钮 -->
-            <div class="reset-container">
-                <button id="reset-btn" class="reset-button" title="重做当前单词">↻</button>
-            </div>
+                <div class="slots" id="slots-container">
+                    <!-- JS 会在此处动态生成槽位 -->
+                </div>
 
-            <div class="letters" id="letters-container">
-                <!-- JS 会在此处动态生成待选字母 -->
-            </div>
-        </main>
+                <div class="reset-container">
+                    <button id="reset-btn" class="reset-button" title="重做当前单词">↻</button>
+                </div>
+
+                <div class="letters" id="letters-container">
+                    <!-- JS 会在此处动态生成待选字母 -->
+                </div>
+            </main>
+        </div>
     </div>
 
-    <!-- 3. 底部反馈栏 (默认隐藏) -->
+    <!-- 底部反馈栏 -->
     <footer class="feedback-bar success" id="success-feedback">
         <button class="continue-button" id="continue-btn">继续</button>
     </footer>
@@ -53,12 +76,12 @@
         <button class="retry-button" id="retry-btn">我知道了</button>
     </footer>
 
-    <!-- 4. 结算模块 (默认隐藏) -->
+    <!-- 结算模块 -->
     <div class="end-screen" id="end-screen">
         <div class="end-screen-content">
-            <h2>太棒了!</h2>
-            <p>你完成了所有单词，收集了 <span id="final-star-count">0</span> 颗星星！</p>
-            <button class="restart-button" id="restart-btn">再玩一次</button>
+            <h2 id="end-title">太棒了!</h2>
+            <p id="end-message">你完成了所有单词，收集了 <span id="final-star-count">0</span> 颗星星！</p>
+            <button class="restart-button" id="restart-btn">返回菜单</button>
         </div>
     </div>
 
